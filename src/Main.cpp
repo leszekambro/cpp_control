@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include "geometry_msgs/Twist.h"
+#include "std_msgs/Empty.h"
 
 using namespace std;
 ardrone_autonomy::Navdata::ConstPtr navdata;
@@ -21,7 +22,7 @@ void ardroneNavdataCallback(const ardrone_autonomy::Navdata::ConstPtr& msg){
 int main(int argc, char* argv[])
 {
   cout<<"Ros Ardrone Initialize"<<endl;
-  ros::init(argc, argv, "ardrone_example_controll");
+  ros::init(argc, argv, "cpp_example_controll");
   ros::NodeHandle nh;
 
   ros::Rate loop_rate(10);
@@ -41,6 +42,7 @@ int main(int argc, char* argv[])
     }
 
     geometry_msgs::Twist msg;
+
     msg.linear.x = 0;
     msg.linear.y = 0;
     msg.linear.z = 0;
@@ -49,22 +51,26 @@ int main(int argc, char* argv[])
     msg.angular.z = 0;
 
     if(!navdata->tags_xc.empty() && !navdata->tags_yc.empty() && !navdata->tags_distance.empty()) {
-      cout << "X: " << navdata->tags_xc.front() << " Y: " << navdata->tags_yc.front();
-      File << "X: " << navdata->tags_xc.front() << " Y: " << navdata->tags_yc.front() << endl;
-      
+     // cout << "X: " << navdata->tags_xc.front() << " Y: " << navdata->tags_yc.front() << endl;
+      //File << "X: " << navdata->tags_xc.front() << " Y: " << navdata->tags_yc.front() << endl;
       cout << " Distance: " << navdata->tags_distance.front() << endl;
 
       float distance = navdata->tags_distance.front();
 
       float diff = 100 - distance;
 
-    } else {
-       cout << " No tags found"<< endl;
-    }
+      if(abs(diff) > 30 ) {
+        if(diff > 0 ){
+          msg.linear.x = -0.1;
+        } else {
+          msg.linear.x = 0.1;
+        }
+      }
+      } else {
+         cout << " No tags found"<< endl;
+      }
 
-    
     publisher.publish(msg);
-
     ros::spinOnce();
     loop_rate.sleep();
   }

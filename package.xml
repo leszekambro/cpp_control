@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>ardrone_example_controll</name>
+  <name>cpp_example_controll</name>
   <version>0.0.0</version>
-  <description>ardrone_example_controll</description>
+  <description>cpp_example_controll</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->

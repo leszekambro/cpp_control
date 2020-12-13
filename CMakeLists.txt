@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ardrone_example_controll)
+project(cpp_example_controll)
 
 add_compile_options(-std=c++11)
 
@@ -41,5 +41,5 @@ catkin_package(
 )
 
 
-add_executable(ardrone_example_controll src/Main.cpp)
-target_link_libraries(ardrone_example_controll ${catkin_LIBRARIES} ${OpenCV_LIBS} X11)
+add_executable(cpp_example_controll src/Main.cpp)
+target_link_libraries(cpp_example_controll ${catkin_LIBRARIES} ${OpenCV_LIBS} X11)
